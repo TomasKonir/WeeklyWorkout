@@ -24,6 +24,7 @@ export default class ItemAddDialog extends React.Component {
         if (isNaN(number) || number < 1) {
             return
         }
+        this.props.onClose()
         this.props.onAddItem(this.props.id, number)
     }
 
