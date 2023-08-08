@@ -34,6 +34,17 @@
     gap: 0.15rem;
 }
 
+.flex-column {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+}
+
+.button-number {
+    width: 2.5rem;
+    height: 2.5rem;
+}
+
 .flex-grow {
     flex-grow: 1;
 }
