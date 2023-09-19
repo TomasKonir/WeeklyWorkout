@@ -36,6 +36,7 @@ export default class App extends React.Component {
         this.state = {
             addVisible: false,
             editMode: false,
+            reloadWaiting: false,
             list: [],
         }
 
@@ -72,15 +73,20 @@ export default class App extends React.Component {
         monday.setMilliseconds(0)
         callApi('list', { monday: monday.getTime() }, this.loadList, this.loadErr)
         this.forceUpdate()
+        setTimeout(() => {
+            if(isWaitingApi()){
+                this.setState({reloadWaiting : true})
+            }
+        }, 500)
     }
 
     loadList(list) {
-        this.setState({ list: list })
+        this.setState({ list: list, reloadWaiting : false })
     }
 
     loadErr(err) {
         console.info(err)
-        this.forceUpdate()
+        this.setState({ reloadWaiting: false })
     }
 
     addWorkout(name, weekCount, type) {
@@ -128,7 +134,7 @@ export default class App extends React.Component {
             editSx.color = 'gray'
             addSx.visibility = 'hidden'
         }
-        if (isWaitingApi()) {
+        if (this.state.reloadWaiting) {
             reloadButton = <img src='waiting.svg' alt='wi' style={{ width: '2.5rem', height: '2.5rem', marginTop: 'auto', marginBottom: 'auto' }} />
         } else {
             reloadButton = <IconButton onClick={this.reload}><ReplayIcon /></IconButton>
