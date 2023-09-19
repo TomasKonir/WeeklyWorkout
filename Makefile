@@ -9,7 +9,7 @@ all:
 	gzip -6 -k build/static/media/*eot
 	gzip -6 -k build/static/media/*ttf
 	chmod o+rw build/data
-	./mkrelease.sh
+	#./mkrelease.sh
 
 install:
 	rsync -avpx --delete --exclude db.sqlite -e ssh build/ skynet:/var/www/html/www/

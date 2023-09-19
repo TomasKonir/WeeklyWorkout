@@ -48,8 +48,17 @@ export default class App extends React.Component {
         this.editWorkout = this.editWorkout.bind(this)
     }
 
-    componentDidMount(){
+    componentDidMount() {
         this.reload()
+        this.timer = setInterval(() => {
+            if (this.state.addVisible === false) {
+                this.reload()
+            }
+        }, 60 * 1000)
+    }
+
+    componentWillUnmount(){
+        clearInterval(this.timer)
     }
 
 
