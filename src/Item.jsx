@@ -56,10 +56,13 @@ export default class Item extends React.Component {
             if (type === 'count') {
                 type = ''
             } else if (type === 'time') {
-                let zero = (remaing % 60) < 10 ? '0' : ''
-                remaing = Math.trunc(remaing / 60) + ':' + zero + (remaing % 60)
-                zero = (weekCount % 60) < 10 ? '0' : ''
-                weekCount = Math.trunc(weekCount / 60) + ':' + zero + (weekCount % 60)
+                let minus = remaing < 0 ? '-' : ''
+                remaing = Math.abs(remaing)
+                let zero0 = (remaing % 60) < 10 ? '0' : ''
+                let zero1 = Math.trunc(remaing / 60) < 10 ? '0' : ''
+                remaing = minus + zero1 + Math.trunc(remaing / 60) + ':' + zero0 + (remaing % 60)
+                zero0 = (weekCount % 60) < 10 ? '0' : ''
+                weekCount = Math.trunc(weekCount / 60) + ':' + zero0 + (weekCount % 60)
             }
             buttons.push(
                 <IconButton key='add' className='item-button-add' onClick={() => this.setState({ addVisible: true, addCount: '' })}>
