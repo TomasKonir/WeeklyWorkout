@@ -12,4 +12,4 @@ all:
 	#./mkrelease.sh
 
 install:
-	rsync -avpx --delete --exclude db.sqlite -e ssh build/ skynet:/var/www/html/www/
+	rsync -avpx --delete --exclude db.sqlite -e ssh build/ www.doma:/var/www/html/www/

@@ -59,11 +59,17 @@ export default class Item extends React.Component {
                 let minus = remaing < 0 ? '-' : ''
                 remaing = Math.abs(remaing)
                 let zero0 = (remaing % 60) < 10 ? '0' : ''
-                let zero1 = Math.trunc(remaing / 60) < 10 ? '0' : ''
-                remaing = minus + zero1 + Math.trunc(remaing / 60) + ':' + zero0 + (remaing % 60)
+                remaing = minus + Math.trunc(remaing / 60) + ':' + zero0 + (remaing % 60)
                 zero0 = (weekCount % 60) < 10 ? '0' : ''
                 weekCount = Math.trunc(weekCount / 60) + ':' + zero0 + (weekCount % 60)
             }
+            if (!isNaN(parseInt(this.props.data.sum))) {
+                let r = this.props.data.weekCount - parseInt(this.props.data.sum)
+                if (r <= 0) {
+                    remaing = 'OK'
+                }
+            }
+
             buttons.push(
                 <IconButton key='add' className='item-button-add' onClick={() => this.setState({ addVisible: true, addCount: '' })}>
                     <AddCircleIcon />
@@ -81,10 +87,10 @@ export default class Item extends React.Component {
                     </IconButton>
                 )
             }
-            progress = <CircularProgress variant='determinate' value={percent} sx={{color : color}} size='1.5rem' />
+            progress = <CircularProgress variant='determinate' value={percent} sx={{ color: color }} size='1.5rem' />
         }
         if (this.state.addVisible) {
-            dialog = <ItemAddDialog id={this.props.data.id} type={this.props.data.type} onClose={()=>this.setState({addVisible : false})} onAddItem={this.props.addItem}/>
+            dialog = <ItemAddDialog id={this.props.data.id} type={this.props.data.type} onClose={() => this.setState({ addVisible: false })} onAddItem={this.props.addItem} />
         }
         if (this.state.editVisible) {
             dialog = <AddDialog defaults={this.props.data} onClose={() => this.setState({ editVisible: false })} onOk={(name, weekCount, type) => {
